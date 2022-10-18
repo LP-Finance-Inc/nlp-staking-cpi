@@ -1,0 +1,951 @@
+{
+  "version": "0.1.0",
+  "name": "nlp_staking",
+  "instructions": [
+    {
+      "name": "createConfig",
+      "docs": [
+        "Create program config and set admin"
+      ],
+      "accounts": [
+        {
+          "name": "owner",
+          "isMut": true,
+          "isSigner": true,
+          "docs": [
+            "Token program authority"
+          ]
+        },
+        {
+          "name": "nlpMint",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "config",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "Config Accounts"
+          ]
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "rent",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "admin",
+          "type": "publicKey"
+        },
+        {
+          "name": "lpfiDailyRewardAmount",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "createStakerAccount",
+      "docs": [
+        "----- Staker account ----->>>>",
+        "create staker account"
+      ],
+      "accounts": [
+        {
+          "name": "stakerAccount",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "State account for each user/wallet"
+          ]
+        },
+        {
+          "name": "config",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "userAuthority",
+          "isMut": true,
+          "isSigner": true,
+          "docs": [
+            "Signer"
+          ]
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "Programs and Sysvars"
+          ]
+        },
+        {
+          "name": "rent",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "deleteStakerAccount",
+      "docs": [
+        "Close staker account"
+      ],
+      "accounts": [
+        {
+          "name": "stakerAccount",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "user's staker account"
+          ]
+        },
+        {
+          "name": "owner",
+          "isMut": false,
+          "isSigner": true,
+          "docs": [
+            "staker account's owner"
+          ]
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "stakeNlp",
+      "docs": [
+        "----- Do staking ----->>>>",
+        "stake nLP"
+      ],
+      "accounts": [
+        {
+          "name": "stakerAccount",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "State account for each user/wallet"
+          ]
+        },
+        {
+          "name": "config",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "userAuthority",
+          "isMut": true,
+          "isSigner": true,
+          "docs": [
+            "staker would be Signer"
+          ]
+        },
+        {
+          "name": "userNlpAta",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "User nLP ATA"
+          ]
+        },
+        {
+          "name": "poolNlpAta",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "Pool nLP ATA"
+          ]
+        },
+        {
+          "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "stakeAmount",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "unstakeNlp",
+      "docs": [
+        "unstake nLP"
+      ],
+      "accounts": [
+        {
+          "name": "userAuthority",
+          "isMut": true,
+          "isSigner": true,
+          "docs": [
+            "staker would be Signer"
+          ]
+        },
+        {
+          "name": "stakerAccount",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "State account for each user/wallet"
+          ]
+        },
+        {
+          "name": "config",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "nlpMint",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "nlp_mint"
+          ]
+        },
+        {
+          "name": "userNlpAta",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "User nLP ATA"
+          ]
+        },
+        {
+          "name": "poolNlpAta",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "Pool nLP ATA"
+          ]
+        },
+        {
+          "name": "poolAuthority",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "associatedTokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "rent",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "unstakeAmount",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "withdrawOldNlp",
+      "docs": [
+        "withdraw whole old nLP"
+      ],
+      "accounts": [
+        {
+          "name": "userAuthority",
+          "isMut": true,
+          "isSigner": true,
+          "docs": [
+            "staker would be Signer"
+          ]
+        },
+        {
+          "name": "stakerAccount",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "State account for each user/wallet"
+          ]
+        },
+        {
+          "name": "config",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "nlpMint",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "nlp_mint"
+          ]
+        },
+        {
+          "name": "userNlpAta",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "User nLP ATA"
+          ]
+        },
+        {
+          "name": "poolNlpAta",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "Pool nLP ATA"
+          ]
+        },
+        {
+          "name": "poolAuthority",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "associatedTokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "rent",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "withdrawReward",
+      "docs": [
+        "withdraw reward tokens (zSOL and LPFi)"
+      ],
+      "accounts": [
+        {
+          "name": "userAuthority",
+          "isMut": true,
+          "isSigner": true,
+          "docs": [
+            "staker would be Signer"
+          ]
+        },
+        {
+          "name": "stakerAccount",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "state account for each user/wallet"
+          ]
+        },
+        {
+          "name": "zsolMint",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "zsol_mint"
+          ]
+        },
+        {
+          "name": "lpfiMint",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "lpfi_mint"
+          ]
+        },
+        {
+          "name": "userZsolAta",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "User reward ATA"
+          ]
+        },
+        {
+          "name": "userLpfiAta",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "poolZsolAta",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "Pool reward ATA"
+          ]
+        },
+        {
+          "name": "poolLpfiAta",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "poolAuthority",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "config",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "associatedTokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "rent",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "updateOwner",
+      "docs": [
+        "----- Admin Panel ----->>>>",
+        "Update owner address"
+      ],
+      "accounts": [
+        {
+          "name": "owner",
+          "isMut": false,
+          "isSigner": true
+        },
+        {
+          "name": "config",
+          "isMut": true,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "newOwner",
+          "type": "publicKey"
+        }
+      ]
+    },
+    {
+      "name": "updateAdmin",
+      "docs": [
+        "update_admin"
+      ],
+      "accounts": [
+        {
+          "name": "owner",
+          "isMut": false,
+          "isSigner": true
+        },
+        {
+          "name": "config",
+          "isMut": true,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "newAdmin",
+          "type": "publicKey"
+        }
+      ]
+    },
+    {
+      "name": "pauseReward",
+      "docs": [
+        "Pause reward"
+      ],
+      "accounts": [
+        {
+          "name": "owner",
+          "isMut": false,
+          "isSigner": true
+        },
+        {
+          "name": "config",
+          "isMut": true,
+          "isSigner": false
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "pauseStaking",
+      "docs": [
+        "Pause staking"
+      ],
+      "accounts": [
+        {
+          "name": "owner",
+          "isMut": false,
+          "isSigner": true
+        },
+        {
+          "name": "config",
+          "isMut": true,
+          "isSigner": false
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "updateLpfiDailyRewardAmount",
+      "docs": [
+        "update lpfi daily reward amount"
+      ],
+      "accounts": [
+        {
+          "name": "owner",
+          "isMut": false,
+          "isSigner": true
+        },
+        {
+          "name": "config",
+          "isMut": true,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "lpfiDailyRewardAmount",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "createPool",
+      "accounts": [
+        {
+          "name": "owner",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "config",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "tokenMint",
+          "isMut": false,
+          "isSigner": false,
+          "docs": [
+            "token_mint"
+          ]
+        },
+        {
+          "name": "poolAta",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "User nLP ATA"
+          ]
+        },
+        {
+          "name": "poolAuthority",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "associatedTokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "rent",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "addZsolReward",
+      "docs": [
+        "zSOL reward"
+      ],
+      "accounts": [
+        {
+          "name": "config",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "admin",
+          "isMut": false,
+          "isSigner": true
+        }
+      ],
+      "args": [
+        {
+          "name": "distributedZsolAmount",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "addLpfiReward",
+      "accounts": [
+        {
+          "name": "config",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "admin",
+          "isMut": false,
+          "isSigner": true
+        }
+      ],
+      "args": []
+    }
+  ],
+  "accounts": [
+    {
+      "name": "Config",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "owner",
+            "docs": [
+              "Program deployer/owner"
+            ],
+            "type": "publicKey"
+          },
+          {
+            "name": "admin",
+            "docs": [
+              "Backend admin to distribute rewards"
+            ],
+            "type": "publicKey"
+          },
+          {
+            "name": "nlpMint",
+            "docs": [
+              "nLP token address"
+            ],
+            "type": "publicKey"
+          },
+          {
+            "name": "lpfiDailyRewardAmount",
+            "docs": [
+              "Daily distribute amount"
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "totalStakedAmount",
+            "docs": [
+              "Total staked amount",
+              "Only `unstake` and `stake` functions updates this `total_staked_amount` in config",
+              "Also, when admin set new nLP token, this amount would be set 'zero'"
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "totalZsolRewardAmount",
+            "docs": [
+              "Total zsol reward amount"
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "totalLpfiRewardAmount",
+            "docs": [
+              "Total lpfi reward amount"
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "frequency",
+            "docs": [
+              "Frequency: 24 hours (12pm EST)"
+            ],
+            "type": "i64"
+          },
+          {
+            "name": "lpfiRewardRate",
+            "docs": [
+              "LPFI reward share percent"
+            ],
+            "type": "f64"
+          },
+          {
+            "name": "zsolRewardRate",
+            "docs": [
+              "zSOL reward share percent"
+            ],
+            "type": "f64"
+          },
+          {
+            "name": "zsolRewardLastTs",
+            "docs": [
+              "Distribution zsol reward timestamp"
+            ],
+            "type": "i64"
+          },
+          {
+            "name": "lpfiRewardLastTs",
+            "docs": [
+              "Distribution lpfi last timestamp"
+            ],
+            "type": "i64"
+          },
+          {
+            "name": "isRewardPaused",
+            "docs": [
+              "check if reward is paused or not"
+            ],
+            "type": "bool"
+          },
+          {
+            "name": "isPaused",
+            "docs": [
+              "check if program is paused or not"
+            ],
+            "type": "bool"
+          }
+        ]
+      }
+    },
+    {
+      "name": "StakerAccount",
+      "docs": [
+        "Staker account to store each stakers info"
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "owner",
+            "docs": [
+              "User Account owner to upgrade/delete any values."
+            ],
+            "type": "publicKey"
+          },
+          {
+            "name": "stakedAmount",
+            "docs": [
+              "staked amount in total"
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "zsolRewardAmount",
+            "docs": [
+              "current reward distributed (zSOL)"
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "lpfiRewardAmount",
+            "docs": [
+              "current reward distributed (LPFi)"
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "zsolRewardRate",
+            "docs": [
+              "Last reward percent (zSOL)"
+            ],
+            "type": "f64"
+          },
+          {
+            "name": "lpfiRewardRate",
+            "docs": [
+              "Last reward percent (zSOL)"
+            ],
+            "type": "f64"
+          },
+          {
+            "name": "lastActionTs",
+            "docs": [
+              "staked timestamp (datetime) in seconds"
+            ],
+            "type": "i64"
+          },
+          {
+            "name": "nlpMint",
+            "docs": [
+              "Current depositing nlp token mint"
+            ],
+            "type": "publicKey"
+          }
+        ]
+      }
+    }
+  ],
+  "errors": [
+    {
+      "code": 6000,
+      "name": "InvalidArguments",
+      "msg": "Invalid Arguments"
+    },
+    {
+      "code": 6001,
+      "name": "InvalidAmount",
+      "msg": "Invalid Amount"
+    },
+    {
+      "code": 6002,
+      "name": "InvalidNLP",
+      "msg": "Invalid nLP mint pub"
+    },
+    {
+      "code": 6003,
+      "name": "InvalidRewardToken",
+      "msg": "Invalid Reward mint pub"
+    },
+    {
+      "code": 6004,
+      "name": "InvalidTokenAccount",
+      "msg": "Invalid TokenAccount"
+    },
+    {
+      "code": 6005,
+      "name": "InvalidAccountOwner",
+      "msg": "Invalid Account Owner"
+    },
+    {
+      "code": 6006,
+      "name": "InvalidProgramOwner",
+      "msg": "Invalid Program Owner"
+    },
+    {
+      "code": 6007,
+      "name": "InvalidAdmin",
+      "msg": "Invalid Admin"
+    },
+    {
+      "code": 6008,
+      "name": "AccountInUse",
+      "msg": "Account is in use"
+    },
+    {
+      "code": 6009,
+      "name": "ValueInUse",
+      "msg": "Value is in use"
+    },
+    {
+      "code": 6010,
+      "name": "InvalidTxSigner",
+      "msg": "Invalid Transaction Signer"
+    },
+    {
+      "code": 6011,
+      "name": "ZeroProperty",
+      "msg": "Should be zero values"
+    },
+    {
+      "code": 6012,
+      "name": "InvalidProgramId",
+      "msg": "Invalid program id. For using program from another account please update id in the code"
+    },
+    {
+      "code": 6013,
+      "name": "UnexpectedAccount",
+      "msg": "Unexpected account"
+    },
+    {
+      "code": 6014,
+      "name": "TooOftenReward",
+      "msg": "Too often reward distribution"
+    },
+    {
+      "code": 6015,
+      "name": "MigrateRequired",
+      "msg": "First, you should migrate nLP mint to new one"
+    },
+    {
+      "code": 6016,
+      "name": "MigrateFinished",
+      "msg": "Migration has been already done"
+    },
+    {
+      "code": 6017,
+      "name": "InsufficientAccountBalance",
+      "msg": "Insufficient Account Balance"
+    },
+    {
+      "code": 6018,
+      "name": "InsufficientPool",
+      "msg": "Insufficient Pool"
+    },
+    {
+      "code": 6019,
+      "name": "OldNLPWtihdrawRequired",
+      "msg": "NLP is now new version, Please use withdraw old nlp option"
+    },
+    {
+      "code": 6020,
+      "name": "OverflowMaxHistorySize",
+      "msg": "Overflow Max History Size"
+    },
+    {
+      "code": 6021,
+      "name": "StakerNotExist",
+      "msg": "Anyone have not participated on staking"
+    },
+    {
+      "code": 6022,
+      "name": "RewardPaused",
+      "msg": "Reward paused"
+    },
+    {
+      "code": 6023,
+      "name": "StakingPaused",
+      "msg": "Staking paused"
+    }
+  ],
+  "metadata": {
+    "address": "EUtcGYBakaqKpvKRon5xrBQVJe7MLVxS3xKkwoN3HKSj"
+  }
+}
