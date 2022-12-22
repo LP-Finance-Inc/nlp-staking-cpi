@@ -46,8 +46,8 @@
           "type": "publicKey"
         },
         {
-          "name": "lpfiDailyRewardAmount",
-          "type": "u64"
+          "name": "rewardStartTs",
+          "type": "i64"
         }
       ]
     },
@@ -371,14 +371,6 @@
           ]
         },
         {
-          "name": "lpfiMint",
-          "isMut": false,
-          "isSigner": false,
-          "docs": [
-            "lpfi_mint"
-          ]
-        },
-        {
           "name": "userZsolAta",
           "isMut": true,
           "isSigner": false,
@@ -387,22 +379,12 @@
           ]
         },
         {
-          "name": "userLpfiAta",
-          "isMut": true,
-          "isSigner": false
-        },
-        {
           "name": "poolZsolAta",
           "isMut": true,
           "isSigner": false,
           "docs": [
             "Pool reward ATA"
           ]
-        },
-        {
-          "name": "poolLpfiAta",
-          "isMut": true,
-          "isSigner": false
         },
         {
           "name": "poolAuthority",
@@ -525,30 +507,6 @@
       "args": []
     },
     {
-      "name": "updateLpfiDailyRewardAmount",
-      "docs": [
-        "update lpfi daily reward amount"
-      ],
-      "accounts": [
-        {
-          "name": "owner",
-          "isMut": false,
-          "isSigner": true
-        },
-        {
-          "name": "config",
-          "isMut": true,
-          "isSigner": false
-        }
-      ],
-      "args": [
-        {
-          "name": "lpfiDailyRewardAmount",
-          "type": "u64"
-        }
-      ]
-    },
-    {
       "name": "createPool",
       "accounts": [
         {
@@ -626,24 +584,12 @@
         {
           "name": "distributedZsolAmount",
           "type": "u64"
-        }
-      ]
-    },
-    {
-      "name": "addLpfiReward",
-      "accounts": [
-        {
-          "name": "config",
-          "isMut": true,
-          "isSigner": false
         },
         {
-          "name": "admin",
-          "isMut": false,
-          "isSigner": true
+          "name": "epochTs",
+          "type": "i64"
         }
-      ],
-      "args": []
+      ]
     }
   ],
   "accounts": [
@@ -674,13 +620,6 @@
             "type": "publicKey"
           },
           {
-            "name": "lpfiDailyRewardAmount",
-            "docs": [
-              "Daily distribute amount"
-            ],
-            "type": "u64"
-          },
-          {
             "name": "totalStakedAmount",
             "docs": [
               "Total staked amount",
@@ -697,25 +636,11 @@
             "type": "u64"
           },
           {
-            "name": "totalLpfiRewardAmount",
-            "docs": [
-              "Total lpfi reward amount"
-            ],
-            "type": "u64"
-          },
-          {
             "name": "frequency",
             "docs": [
               "Frequency: 24 hours (12pm EST)"
             ],
             "type": "i64"
-          },
-          {
-            "name": "lpfiRewardRate",
-            "docs": [
-              "LPFI reward share percent"
-            ],
-            "type": "f64"
           },
           {
             "name": "zsolRewardRate",
@@ -728,13 +653,6 @@
             "name": "zsolRewardLastTs",
             "docs": [
               "Distribution zsol reward timestamp"
-            ],
-            "type": "i64"
-          },
-          {
-            "name": "lpfiRewardLastTs",
-            "docs": [
-              "Distribution lpfi last timestamp"
             ],
             "type": "i64"
           },
@@ -785,21 +703,7 @@
             "type": "u64"
           },
           {
-            "name": "lpfiRewardAmount",
-            "docs": [
-              "current reward distributed (LPFi)"
-            ],
-            "type": "u64"
-          },
-          {
             "name": "zsolRewardRate",
-            "docs": [
-              "Last reward percent (zSOL)"
-            ],
-            "type": "f64"
-          },
-          {
-            "name": "lpfiRewardRate",
             "docs": [
               "Last reward percent (zSOL)"
             ],
@@ -943,9 +847,14 @@
       "code": 6023,
       "name": "StakingPaused",
       "msg": "Staking paused"
+    },
+    {
+      "code": 6024,
+      "name": "RewardEpochRequired",
+      "msg": "Reward epoch required"
     }
   ],
   "metadata": {
-    "address": "EUtcGYBakaqKpvKRon5xrBQVJe7MLVxS3xKkwoN3HKSj"
+    "address": "2H3ZyVdZyf2jYG5s6bDZ1m7YZ1LZQApLaceNBZ9vCpbK"
   }
 }
