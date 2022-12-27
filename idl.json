@@ -48,6 +48,14 @@
         {
           "name": "rewardStartTs",
           "type": "i64"
+        },
+        {
+          "name": "depositFee",
+          "type": "f64"
+        },
+        {
+          "name": "feeAccount",
+          "type": "publicKey"
         }
       ]
     },
@@ -154,6 +162,14 @@
           "isSigner": false,
           "docs": [
             "User nLP ATA"
+          ]
+        },
+        {
+          "name": "feeAta",
+          "isMut": true,
+          "isSigner": false,
+          "docs": [
+            "Fee nLP ATA"
           ]
         },
         {
@@ -469,6 +485,78 @@
       ]
     },
     {
+      "name": "updateTs",
+      "docs": [
+        "update_last_ts"
+      ],
+      "accounts": [
+        {
+          "name": "owner",
+          "isMut": false,
+          "isSigner": true
+        },
+        {
+          "name": "config",
+          "isMut": true,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "epochTs",
+          "type": "i64"
+        }
+      ]
+    },
+    {
+      "name": "processUpdateDepositFee",
+      "docs": [
+        "update deposit_fee percent"
+      ],
+      "accounts": [
+        {
+          "name": "owner",
+          "isMut": false,
+          "isSigner": true
+        },
+        {
+          "name": "config",
+          "isMut": true,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "depositFee",
+          "type": "f64"
+        }
+      ]
+    },
+    {
+      "name": "processUpdateFeeAccount",
+      "docs": [
+        "update fee account"
+      ],
+      "accounts": [
+        {
+          "name": "owner",
+          "isMut": false,
+          "isSigner": true
+        },
+        {
+          "name": "config",
+          "isMut": true,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "feeAccount",
+          "type": "publicKey"
+        }
+      ]
+    },
+    {
       "name": "pauseReward",
       "docs": [
         "Pause reward"
@@ -608,7 +696,8 @@
           {
             "name": "admin",
             "docs": [
-              "Backend admin to distribute rewards"
+              "Lpfinance program zsol_mint_authority",
+              "to distribute rewards into nlp-staking"
             ],
             "type": "publicKey"
           },
@@ -616,6 +705,20 @@
             "name": "nlpMint",
             "docs": [
               "nLP token address"
+            ],
+            "type": "publicKey"
+          },
+          {
+            "name": "depositFee",
+            "docs": [
+              "Deposit Fee"
+            ],
+            "type": "f64"
+          },
+          {
+            "name": "feeAccount",
+            "docs": [
+              "Fee account"
             ],
             "type": "publicKey"
           },
@@ -855,6 +958,6 @@
     }
   ],
   "metadata": {
-    "address": "2H3ZyVdZyf2jYG5s6bDZ1m7YZ1LZQApLaceNBZ9vCpbK"
+    "address": "J4YHXTse83yn1Y1UAinQRZmt1UoUV3uiQmSn9aTTjds9"
   }
 }
